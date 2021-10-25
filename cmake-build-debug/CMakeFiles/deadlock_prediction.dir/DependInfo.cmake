@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/GitHub/deadlock_prediction/main.cpp" "C:/GitHub/deadlock_prediction/cmake-build-debug/CMakeFiles/deadlock_prediction.dir/main.cpp.obj"
+  "C:/GitHub/deadlock_prediction/mutex_detect.cpp" "C:/GitHub/deadlock_prediction/cmake-build-debug/CMakeFiles/deadlock_prediction.dir/mutex_detect.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

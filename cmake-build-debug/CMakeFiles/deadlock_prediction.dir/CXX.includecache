@@ -6,29 +6,17 @@
 
 #IncludeRegexTransform: 
 
-C:/GitHub/deadlock_prediction/main.cpp
-iostream
--
-thread_utils.h
-C:/GitHub/deadlock_prediction/thread_utils.h
-thread
--
-cstdlib
--
-unistd.h
--
-iostream
--
-map
--
-string
--
-chrono
--
-thread
--
+C:/GitHub/deadlock_prediction/mutex_detect.cpp
+mutex_detect.h
+C:/GitHub/deadlock_prediction/mutex_detect.h
+
+C:/GitHub/deadlock_prediction/mutex_detect.h
 mutex
 -
-
-C:/GitHub/deadlock_prediction/thread_utils.h
+vector
+-
+iostream
+-
+thread
+-
 

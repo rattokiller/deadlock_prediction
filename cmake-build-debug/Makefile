@@ -152,6 +152,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\deadlock_prediction.dir\build.make CMakeFiles/deadlock_prediction.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mutex_detect.obj: mutex_detect.cpp.obj
+.PHONY : mutex_detect.obj
+
+# target to build an object file
+mutex_detect.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\deadlock_prediction.dir\build.make CMakeFiles/deadlock_prediction.dir/mutex_detect.cpp.obj
+.PHONY : mutex_detect.cpp.obj
+
+mutex_detect.i: mutex_detect.cpp.i
+.PHONY : mutex_detect.i
+
+# target to preprocess a source file
+mutex_detect.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\deadlock_prediction.dir\build.make CMakeFiles/deadlock_prediction.dir/mutex_detect.cpp.i
+.PHONY : mutex_detect.cpp.i
+
+mutex_detect.s: mutex_detect.cpp.s
+.PHONY : mutex_detect.s
+
+# target to generate assembly for a file
+mutex_detect.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\deadlock_prediction.dir\build.make CMakeFiles/deadlock_prediction.dir/mutex_detect.cpp.s
+.PHONY : mutex_detect.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -164,6 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... mutex_detect.obj
+	@echo ... mutex_detect.i
+	@echo ... mutex_detect.s
 .PHONY : help
 
 

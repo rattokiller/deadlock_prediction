@@ -3,4 +3,4 @@ project(deadlock_prediction)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(deadlock_prediction main.cpp)
+add_executable(deadlock_prediction main.cpp mutex_detect.cpp mutex_detect.h)

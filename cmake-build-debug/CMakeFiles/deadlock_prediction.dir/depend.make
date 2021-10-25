@@ -3,4 +3,7 @@
 
 CMakeFiles/deadlock_prediction.dir/main.cpp.obj: \
  ../main.cpp \
- ../thread_utils.h
+ ../mutex_detect.h
+CMakeFiles/deadlock_prediction.dir/mutex_detect.cpp.obj: \
+ ../mutex_detect.cpp \
+ ../mutex_detect.h

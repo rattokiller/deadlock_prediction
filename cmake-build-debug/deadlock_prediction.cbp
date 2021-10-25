@@ -83,6 +83,12 @@
 		<Unit filename="C:/GitHub/deadlock_prediction/main.cpp">
 			<Option target="deadlock_prediction"/>
 		</Unit>
+		<Unit filename="C:/GitHub/deadlock_prediction/mutex_detect.cpp">
+			<Option target="deadlock_prediction"/>
+		</Unit>
+		<Unit filename="C:/GitHub/deadlock_prediction/mutex_detect.h">
+			<Option target="deadlock_prediction"/>
+		</Unit>
 		<Unit filename="C:/GitHub/deadlock_prediction/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
