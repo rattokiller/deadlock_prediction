@@ -5,23 +5,53 @@
 #include <thread>
 #include "mutex_detect.h"
 
+//High intensty text
+#define HBLK "\e[0;90m"
+#define HRED "\e[0;91m"
+#define HGRN "\e[0;92m"
+#define HYEL "\e[0;93m"
+#define HBLU "\e[0;94m"
+#define HMAG "\e[0;95m"
+#define HCYN "\e[0;96m"
+#define HWHT "\e[0;97m"
+
+//Reset
+#define RST "\e[0m"
+
 
 using namespace std;
 
 void save_page(const int i)
 {
 
+    // cout<<"pid : "<<gettid()<<endl;;
     mutex_detect& m = mutex_detect::getInstance();
     int j = (i+1)%2;
-    m.my_lock(i);
-    cout <<" - blocco e consumo il dato "<<i<<endl;
-    // simulate a long page fetch
-    this_thread::sleep_for(std::chrono::seconds(2));
+    bool deadlook;
+    do
+    {
+        deadlook=false;
+        if(m.my_lock(i)!=0)
+            cout<<"Errore - falsa deadlook rilevata"<<endl;
+		
+		
+        cout <<HRED<<gettid()<<" blocco il dato "<<i<<RST<<endl;
+        // simulate a long page fetch
+        this_thread::sleep_for(std::chrono::seconds(2));
 
 
+        if(m.my_lock(j)!=0){
+            deadlook=true;
+            cout<<HRED<<"Risolvo deadlook"<<RST<<endl;
+               cout<< m;
+            m.my_unlock(i);
+            //this_thread::sleep_until(std::chrono::seconds(1));
+            this_thread::sleep_for(std::chrono::seconds(2));
+        }
+    }
+    while(deadlook);
 
-    m.my_lock(j);
-    cout<<"blocco Dentro consumo il dato "<<i<<"  di "<< j<<endl;
+    cout<<HRED<<gettid()<<" blocco Dentro  dato "<<i<<"  di "<< j<<RST<<endl;
     // simulate a long page fetch
     this_thread::sleep_for(std::chrono::seconds(2));
 
@@ -34,14 +64,19 @@ void save_page(const int i)
 int main()
 {
     int i=0;
+   
     thread t1(save_page, i++);
     thread t2(save_page, i++);
-    this_thread::sleep_for(std::chrono::seconds(3));
     mutex_detect& m = mutex_detect::getInstance();
+    this_thread::sleep_for(std::chrono::seconds(6));
+    
 
-    cout<< m;
+    
     t1.join();
     t2.join();
+    this_thread::sleep_for(std::chrono::seconds(3));
+    cout<< m;
+
 
     // safe to access g_pages without lock now, as the threads are joined
 

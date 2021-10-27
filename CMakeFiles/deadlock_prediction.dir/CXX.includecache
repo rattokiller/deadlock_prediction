@@ -16,10 +16,6 @@ thread
 mutex_detect.h
 /home/srt/deadlook/deadlock_prediction/mutex_detect.h
 
-/home/srt/deadlook/deadlock_prediction/mutex_detect.cpp
-mutex_detect.h
-/home/srt/deadlook/deadlock_prediction/mutex_detect.h
-
 /home/srt/deadlook/deadlock_prediction/mutex_detect.h
 mutex
 -

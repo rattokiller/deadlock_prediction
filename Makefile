@@ -102,6 +102,7 @@ all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/srt/deadlook/deadlock_prediction/CMakeFiles /home/srt/deadlook/deadlock_prediction//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/srt/deadlook/deadlock_prediction/CMakeFiles 0
+	./deadlock_prediction
 .PHONY : all
 
 # The main clean target

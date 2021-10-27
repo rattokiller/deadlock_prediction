@@ -13,15 +13,17 @@
 #define N_max 2
  class mutex_detect {
 private:
-    mutex_detect(){}
+  
     std::mutex g_pages_mutex[N_max];
     std::mutex data_mutex;
-    std::vector<std::thread::id> stato_risorse[N_max];
+    std::vector<int> stato_risorse[N_max];
 
-     void write_lock(int id_risorsa);
-     void write_unlock(int id_risorsa);
+    int  test_deadlock(int id_risorsa);
+    void write_lock(int id_risorsa);
+    void write_unlock(int id_risorsa);
 
 public:
+    mutex_detect();
     static mutex_detect& getInstance()
     {
         static mutex_detect    instance; // Guaranteed to be destroyed.
