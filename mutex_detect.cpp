@@ -52,13 +52,13 @@ void mutex_detect::write_lock(int id_risorsa){
     	continua = true;
     	
     	if(stato_risorse[i][0] == id)stato_risorse[i].push_back(id_risorsa);
-    	/*
+    	
             for(int j=1;j<stato_risorse[i].size() && continua;j++)
 		        if (stato_risorse[stato_risorse[i][j]][0] == id)
 		            continua = false;
 		         
 		if(continua == false)stato_risorse[i].push_back(id_risorsa);
-        */
+        
         
 	}
     //data_mutex.unlock();

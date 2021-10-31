@@ -26,7 +26,7 @@ void save_page(const int i)
 
     // cout<<"pid : "<<gettid()<<endl;;
     mutex_detect& m = mutex_detect::getInstance();
-    int j = (i+1)%2;
+    int j = (i+1)%N_max;
     bool deadlook;
     do
     {
@@ -67,13 +67,15 @@ int main()
    
     thread t1(save_page, i++);
     thread t2(save_page, i++);
+    thread t3(save_page, i++);
     mutex_detect& m = mutex_detect::getInstance();
     this_thread::sleep_for(std::chrono::seconds(6));
     
 
-    
+    cout<< m;
     t1.join();
     t2.join();
+    t3.join();
     this_thread::sleep_for(std::chrono::seconds(3));
     cout<< m;
 
