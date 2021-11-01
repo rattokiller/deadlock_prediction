@@ -8,30 +8,37 @@ using namespace std;
     for(int i=0;i<N_max;i++)
         stato_risorse[i].push_back(-1);
 }
+
 int mutex_detect::test_deadlock(int id_risorsa){
     //data_mutex.lock();
     //if(stato_risorse[id_risorsa][0]!=-1){
             
-        std::cout<<"Test... ";
-        if ()
+        //std::cout<<"Test... ";
         int id = gettid();//verificare se chiedo la risorsa a me stesso
+        if (stato_risorse[id_risorsa][0]==id){
+        
+        	std::cout<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<std::endl;
+                //data_mutex.unlock();
+            return  -1;
+       	}
+        
         for (int i=1;i<stato_risorse[id_risorsa].size();i++) {//si puo saltare il primo cilco
         auto item = stato_risorse[id_risorsa][i];
-            std::cout<<id<<" - "<<item<<" - ";
+            //std::cout<<id<<" - "<<item<<" - ";
             
             if (stato_risorse[stato_risorse[id_risorsa][i]][0] == id) {
             //devo controlare con tutte le mie risore
 
 
             
-                std::cout<<" ["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"]"<<std::endl;
+                std::cout<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"]"<<std::endl;
                 //data_mutex.unlock();
                 return  stato_risorse[id_risorsa][0];
                 //trovare la risorsa associata crea torppi problemi di gestione, il processo deve rilasciare tutto
             }
         }
        
-        std::cout<<"ok"<<std::endl;
+        //std::cout<<"ok"<<std::endl;
         
     return 0;
 }
@@ -61,9 +68,9 @@ void mutex_detect::write_lock(int id_risorsa){
         for(int j=1;j<stato_risorse[i].size() && continua;j++){
 	        if (stato_risorse[stato_risorse[i][j]][0] == id)
 	            continua = false;
-	            if(stato_risorse[i].size()>N_max+1){
+	            if(stato_risorse[i].size()>2*N_max+1){
 	            cout<<"Errore Critico BUG"<<endl;
-	            *(int*)(10)=2;//Segmentation fault
+	            //*(int*)(10)=2;//Segmentation fault
 	            
 	            }
 	            	
@@ -81,13 +88,15 @@ void mutex_detect::write_lock(int id_risorsa){
 }
 
 void mutex_detect::write_unlock(int id_risorsa){
-   
-
+	//bug
+	stato_risorse[id_risorsa].clear();
+	stato_risorse[id_risorsa].push_back(-1);
+	return;
     //stato_risorse[id_risorsa][0]=-1;
     int id = gettid();
     for(int i=0;i<N_max;i++)
     	for(int j=1;j<stato_risorse[i].size();j++)
-    		if (stato_risorse[i][j] == id_risorsa)
+    		if (stato_risorse[i][j] == id_risorsa )
                 stato_risorse[i].erase(stato_risorse[i].begin()+j);
    
    
@@ -108,6 +117,11 @@ int mutex_detect::my_lock(int id_risorsa) {
 		g_pages_mutex[id_risorsa].lock();
 		
     }
+    else if(stato_risorse[id_risorsa][0]==gettid()){
+    	std::cout<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<std::endl;
+    	data_mutex.unlock();
+			
+    }
     else
     {
     	cout<<gettid()<<" - Mi blochero su "<<id_risorsa<<endl;
@@ -123,6 +137,10 @@ int mutex_detect::my_lock(int id_risorsa) {
 			stato_risorse[id_risorsa][0]=gettid();
 			data_mutex.unlock();
 		}
+		else if(ris == -1){
+			data_mutex.unlock();
+			
+		}
 		else{
 			data_mutex.unlock();
 			//deadlock detect
@@ -134,14 +152,20 @@ int mutex_detect::my_lock(int id_risorsa) {
 
 int mutex_detect::my_unlock(int id_risorsa) {
 	data_mutex.lock();
-	//cout<<"libero risorsa "<<id_risorsa<<endl;
-
-	write_unlock(id_risorsa);
-	stato_risorse[id_risorsa][0]=-1;
-	
-	data_mutex.unlock();
-	
-    g_pages_mutex[id_risorsa].unlock();
+	//cout<<gettid()<<" - libero risorsa "<<id_risorsa<<endl;
+	if(stato_risorse[id_risorsa][0]==gettid()){
+		write_unlock(id_risorsa);
+		stato_risorse[id_risorsa][0]=-1;
+		
+		data_mutex.unlock();
+		
+		g_pages_mutex[id_risorsa].unlock();
+	}
+	else
+	{
+		cout<<gettid()<<" - Risorsa non posseduta - "<<id_risorsa<<endl;
+		data_mutex.unlock();
+	}
     
     
 	

@@ -29,8 +29,9 @@ void save_page(const int i)
 
     //cout<<"pid : "<<gettid()<<endl;;
     mutex_detect& m = mutex_detect::getInstance();
-    int j = (i+1)%N_max;
-    j = (i+1+rand()%3)%N_max;
+    //int j = (i+1)%N_max;
+    int j = rand()%N_max;
+    int k = rand()%N_max;
     bool deadlook;
     do
     {
@@ -44,11 +45,21 @@ void save_page(const int i)
         this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
 
 
-        if(m.my_lock(j)!=0){
+        if(m.my_lock(j)>0){
             deadlook=true;
-            cout<<HRED<<"Risolvo deadlook"<<RST<<endl;
+            cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;
                cout<< m;
             m.my_unlock(i);
+            //this_thread::sleep_until(std::chrono::seconds(1));
+            this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
+        }
+        
+        if(false && !deadlook && m.my_lock(k)>0){
+            deadlook=true;
+            cout<<HRED<<"\tRisolvo deadlook - 2"<<RST<<endl;
+               cout<< m;
+            m.my_unlock(i);
+            m.my_unlock(j);
             //this_thread::sleep_until(std::chrono::seconds(1));
             this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
         }
@@ -60,9 +71,13 @@ void save_page(const int i)
     this_thread::sleep_for(std::chrono::milliseconds(2));
 
 
+	  
+   //m.my_unlock(k);
+   
    m.my_unlock(j);
 
    m.my_unlock(i);
+ 
 }
 
 int main_generate()
@@ -72,6 +87,9 @@ int main_generate()
    	for(int i=0;i<N_max;i++)
    		t[i] = thread(save_page, i);
    	
+   	for(int i=0;i<N_max;i++)
+    	cout<<"\t th = ["<<i<<"]\t"<<t[i].joinable()<<endl;
+    
     /*
     thread t1(save_page, i++);
     thread t2(save_page, i++);
@@ -87,6 +105,10 @@ int main_generate()
     t3.join();
     */
     cout<< m;
+    for(int i=0;i<N_max;i++)
+    	cout<<"\t th = ["<<i<<"]\t"<<t[i].joinable()<<endl;
+    
+    
     for(int i=0;i<N_max;i++)	t[i].join();
    	
    	
