@@ -10,7 +10,7 @@
 #include <iostream>
 #include <thread>
 
-#define N_max 3
+#define N_max 10
  class mutex_detect {
 private:
   

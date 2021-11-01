@@ -3,6 +3,9 @@
 
 #include <chrono>
 #include <thread>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
 #include "mutex_detect.h"
 
 //High intensty text
@@ -17,16 +20,17 @@
 
 //Reset
 #define RST "\e[0m"
-
-
+#define Rand_max_time 10
+#define Rand_max_id 5
 using namespace std;
 
 void save_page(const int i)
 {
 
-    // cout<<"pid : "<<gettid()<<endl;;
+    //cout<<"pid : "<<gettid()<<endl;;
     mutex_detect& m = mutex_detect::getInstance();
     int j = (i+1)%N_max;
+    j = (i+1+rand()%3)%N_max;
     bool deadlook;
     do
     {
@@ -35,9 +39,9 @@ void save_page(const int i)
             cout<<"Errore - falsa deadlook rilevata"<<endl;
 		
 		
-        cout <<HRED<<gettid()<<" blocco il dato "<<i<<RST<<endl;
+        //cout <<HRED<<gettid()<<" blocco il dato "<<i<<RST<<endl;
         // simulate a long page fetch
-        this_thread::sleep_for(std::chrono::seconds(2));
+        this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
 
 
         if(m.my_lock(j)!=0){
@@ -46,14 +50,14 @@ void save_page(const int i)
                cout<< m;
             m.my_unlock(i);
             //this_thread::sleep_until(std::chrono::seconds(1));
-            this_thread::sleep_for(std::chrono::seconds(2));
+            this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
         }
     }
     while(deadlook);
 
-    cout<<HRED<<gettid()<<" blocco Dentro  dato "<<i<<"  di "<< j<<RST<<endl;
+    //cout<<HRED<<gettid()<<" blocco Dentro  dato "<<i<<"  di "<< j<<RST<<endl;
     // simulate a long page fetch
-    this_thread::sleep_for(std::chrono::seconds(2));
+    this_thread::sleep_for(std::chrono::milliseconds(2));
 
 
    m.my_unlock(j);
@@ -61,25 +65,51 @@ void save_page(const int i)
    m.my_unlock(i);
 }
 
-int main()
+int main_generate()
 {
-    int i=0;
-   
+    //int i=0;
+   	thread t[N_max];
+   	for(int i=0;i<N_max;i++)
+   		t[i] = thread(save_page, i);
+   	
+    /*
     thread t1(save_page, i++);
     thread t2(save_page, i++);
     thread t3(save_page, i++);
+    */
     mutex_detect& m = mutex_detect::getInstance();
-    this_thread::sleep_for(std::chrono::seconds(6));
+    this_thread::sleep_for(std::chrono::seconds(1));
     
 
-    cout<< m;
+    /*
     t1.join();
     t2.join();
     t3.join();
-    this_thread::sleep_for(std::chrono::seconds(3));
+    */
     cout<< m;
+    for(int i=0;i<N_max;i++)	t[i].join();
+   	
+   	
+    //this_thread::sleep_for(std::chrono::seconds(1));
+    //cout<< m;
 
 
     // safe to access g_pages without lock now, as the threads are joined
+	return 0;
+}
+
+int main(int argc,char **argv)
+{
+	int N=1;
+	srand (time(NULL));
+	
+	cout<<"Start [N="<<N_max<<"]"<<endl<<endl;
+	if(argc > 1)
+		N=atoi(argv[1]);
+		
+	for(int i=0;i<N;i++){
+	cout<<HCYN<<"Prova N[ "<<i+1<<" ]"<<RST<<endl;
+			main_generate();
+	}
 
 }

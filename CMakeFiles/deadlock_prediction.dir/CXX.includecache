@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/srt/deadlook/deadlock_prediction/mutex_detect.cpp
+/home/srt/deadlook/deadlock_prediction/main.cpp
+iostream
+-
+chrono
+-
+thread
+-
+stdlib.h
+-
+time.h
+-
 mutex_detect.h
 /home/srt/deadlook/deadlock_prediction/mutex_detect.h
 
