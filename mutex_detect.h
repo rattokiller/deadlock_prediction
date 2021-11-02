@@ -10,7 +10,23 @@
 #include <iostream>
 #include <thread>
 
+//High intensty text
+#define HBLK "\e[0;90m"
+#define HRED "\e[0;91m"
+#define HGRN "\e[0;92m"
+#define HYEL "\e[0;93m"
+#define HBLU "\e[0;94m"
+#define HMAG "\e[0;95m"
+#define HCYN "\e[0;96m"
+#define HWHT "\e[0;97m"
+
+//Reset
+#define RST "\e[0m"
+
 #define N_max 20
+
+#define Rand_max_time 10
+#define Rand_max_id 5
  class mutex_detect {
 private:
   
@@ -20,6 +36,7 @@ private:
 
     int  test_deadlock(int id_risorsa);
     void write_lock(int id_risorsa);
+    void clear_write_lock(int id_risorsa);
     void write_unlock(int id_risorsa);
 
 public:

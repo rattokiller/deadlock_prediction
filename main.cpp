@@ -8,26 +8,18 @@
 
 #include "mutex_detect.h"
 
-//High intensty text
-#define HBLK "\e[0;90m"
-#define HRED "\e[0;91m"
-#define HGRN "\e[0;92m"
-#define HYEL "\e[0;93m"
-#define HBLU "\e[0;94m"
-#define HMAG "\e[0;95m"
-#define HCYN "\e[0;96m"
-#define HWHT "\e[0;97m"
 
-//Reset
-#define RST "\e[0m"
-#define Rand_max_time 10
-#define Rand_max_id 5
 using namespace std;
 
+int status[N_max];
+int th_id[N_max];
+bool my_terminate;
 void save_page(const int i)
 {
 
     //cout<<"pid : "<<gettid()<<endl;;
+    status[i]=-2;
+    th_id[i]=gettid();
     mutex_detect& m = mutex_detect::getInstance();
     //int j = (i+1)%N_max;
     int j = rand()%N_max;
@@ -36,47 +28,50 @@ void save_page(const int i)
     do
     {
         deadlook=false;
+        status[i]=i;
         if(m.my_lock(i)!=0)
             cout<<"Errore - falsa deadlook rilevata"<<endl;
-		
+		status[i]=-3;
 		
         //cout <<HRED<<gettid()<<" blocco il dato "<<i<<RST<<endl;
         // simulate a long page fetch
         this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
 
-
+		status[i]=j;
         if(m.my_lock(j)>0){
             deadlook=true;
             cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;
                cout<< m;
             m.my_unlock(i);
             //this_thread::sleep_until(std::chrono::seconds(1));
-            this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
+            this_thread::sleep_for(std::chrono::milliseconds(20+rand()%Rand_max_time));
         }
+        status[i]=k;
         
-        if(false && !deadlook && m.my_lock(k)>0){
+        if(!deadlook && m.my_lock(k)>0){
             deadlook=true;
             cout<<HRED<<"\tRisolvo deadlook - 2"<<RST<<endl;
                cout<< m;
             m.my_unlock(i);
             m.my_unlock(j);
             //this_thread::sleep_until(std::chrono::seconds(1));
-            this_thread::sleep_for(std::chrono::milliseconds(2+rand()%Rand_max_time));
+            this_thread::sleep_for(std::chrono::milliseconds(20+rand()%Rand_max_time));
         }
+        status[i]=-4;
     }
-    while(deadlook);
-
+    while(deadlook && my_terminate);
     //cout<<HRED<<gettid()<<" blocco Dentro  dato "<<i<<"  di "<< j<<RST<<endl;
     // simulate a long page fetch
     this_thread::sleep_for(std::chrono::milliseconds(2));
 
 
 	  
-   //m.my_unlock(k);
+   m.my_unlock(k);
    
    m.my_unlock(j);
 
    m.my_unlock(i);
+   status[i]=-100;
  
 }
 
@@ -84,17 +79,13 @@ int main_generate()
 {
     //int i=0;
    	thread t[N_max];
-   	for(int i=0;i<N_max;i++)
+   	my_terminate=true;
+    for(int i=0;i<N_max;i++)
    		t[i] = thread(save_page, i);
-   	
    	for(int i=0;i<N_max;i++)
-    	cout<<"\t th = ["<<i<<"]\t"<<t[i].joinable()<<endl;
-    
-    /*
-    thread t1(save_page, i++);
-    thread t2(save_page, i++);
-    thread t3(save_page, i++);
-    */
+   		status[i]=-1;
+   	
+   	
     mutex_detect& m = mutex_detect::getInstance();
     this_thread::sleep_for(std::chrono::seconds(1));
     
@@ -105,11 +96,22 @@ int main_generate()
     t3.join();
     */
     cout<< m;
+    cout<<"status:\n\t-1: no start"<<endl;
+    cout<<"\t -2 :start th"<<endl;
+    cout<<"\t -3 :start th"<<endl;
+    cout<<"\t -4 :start th"<<endl;
+    cout<<"\t -100 :start th"<<endl;
+    cout<<"\t 0 to "<<N_max<<" lock to risors i"<<endl;
+    
+    my_terminate=false;
     for(int i=0;i<N_max;i++)
-    	cout<<"\t th = ["<<i<<"]\t"<<t[i].joinable()<<endl;
+    	cout<<"["<<i<<"]\tth["<<th_id[i]<<"]\t"<<status[i]<<endl;
     
     
-    for(int i=0;i<N_max;i++)	t[i].join();
+    for(int i=0;i<N_max;i++)
+    	t[i].join();
+    	
+    
    	
    	
     //this_thread::sleep_for(std::chrono::seconds(1));
@@ -125,12 +127,13 @@ int main(int argc,char **argv)
 	int N=1;
 	srand (time(NULL));
 	
-	cout<<"Start [N="<<N_max<<"]"<<endl<<endl;
+	cout<<"Start [N_risorse "<<N_max<<"]"<<endl<<endl;
 	if(argc > 1)
 		N=atoi(argv[1]);
 		
 	for(int i=0;i<N;i++){
 	cout<<HCYN<<"Prova N[ "<<i+1<<" ]"<<RST<<endl;
+	
 			main_generate();
 	}
 
