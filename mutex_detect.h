@@ -18,28 +18,36 @@
 #define HBLU "\e[0;94m"
 #define HMAG "\e[0;95m"
 #define HCYN "\e[0;96m"
-#define HWHT "\e[0;97m"
+#define HWHT "\e[0;97m"  
 
 //Reset
 #define RST "\e[0m"
 
-#define N_max 20
+#define N_max 30
 
-#define Rand_max_time 10
+#define linux
+//#define debug
+
+
+#define Rand_max_time 8
 #define Rand_max_id 5
  class mutex_detect {
 private:
   
-    std::mutex g_pages_mutex[N_max];
+    std::mutex g_pages_mutex[N_max];   
     std::mutex data_mutex;
     std::vector<int> stato_risorse[N_max];
 
     int  test_deadlock(int id_risorsa);
     void write_lock(int id_risorsa);
+    
     void clear_write_lock(int id_risorsa);
     void write_unlock(int id_risorsa);
+    
+    
 
 public:
+	
     mutex_detect();
     static mutex_detect& getInstance()
     {
@@ -54,6 +62,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const mutex_detect& dt);
 };
 
+
+int get_id();
 
 /*
  * Regole

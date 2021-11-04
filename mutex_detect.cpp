@@ -10,14 +10,12 @@ using namespace std;
 }
 
 int mutex_detect::test_deadlock(int id_risorsa){
-    //data_mutex.lock();
-    //if(stato_risorse[id_risorsa][0]!=-1){
-            
+          
         //std::cout<<"Test... ";
-        int id = gettid();//verificare se chiedo la risorsa a me stesso
+        int id = get_id();//verificare se chiedo la risorsa a me stesso
         if (stato_risorse[id_risorsa][0]==id){
         
-        	std::cout<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<std::endl;
+        	std::cout<<"["<<id<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<std::endl;
                 //data_mutex.unlock();
             return  -1;
        	}
@@ -31,20 +29,19 @@ int mutex_detect::test_deadlock(int id_risorsa){
 
 
             
-                std::cout<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"]"<<std::endl;
+                std::cout<<"["<<id<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"]"<<std::endl;
                 //data_mutex.unlock();
                 return  stato_risorse[id_risorsa][0];
                 //trovare la risorsa associata crea torppi problemi di gestione, il processo deve rilasciare tutto
             }
         }
        
-        //std::cout<<"ok"<<std::endl;
-        
+       
     return 0;
 }
 //libera la coda di tutte le risorse posedute dal' ogetto
 void mutex_detect::clear_write_lock(int id_risorsa){
-	int id = gettid();
+	int id = get_id();
 	
 	for(int i=0;i<N_max;i++)
 	
@@ -55,8 +52,8 @@ void mutex_detect::clear_write_lock(int id_risorsa){
 		}
 }
 void mutex_detect::write_lock(int id_risorsa){
-    //data_mutex.lock();
-    int id = gettid();
+    
+    int id = get_id();
    	bool continua ;
 
 	//stato_risorse[id_risorsa][0]= gettid();
@@ -65,9 +62,11 @@ void mutex_detect::write_lock(int id_risorsa){
 	
     	if(stato_risorse[i][0] == id){
     		stato_risorse[i].push_back(id_risorsa);
+    		
     		for(int j=1;j<stato_risorse[id_risorsa].size(); j++)
     			stato_risorse[i].push_back(stato_risorse[id_risorsa][j]);
     	}
+    	
     }
     
     for(int i=0;i<N_max;i++){//sta un problema grave
@@ -95,8 +94,9 @@ void mutex_detect::write_lock(int id_risorsa){
         
         
 	}
-    //data_mutex.unlock();
+    
 }
+
 
 void mutex_detect::write_unlock(int id_risorsa){
 	//bug
@@ -104,7 +104,7 @@ void mutex_detect::write_unlock(int id_risorsa){
 	stato_risorse[id_risorsa].push_back(-1);
 	return;
     //stato_risorse[id_risorsa][0]=-1;
-    int id = gettid();
+    int id = get_id();
     for(int i=0;i<N_max;i++)
     	for(int j=1;j<stato_risorse[i].size();j++)
     		if (stato_risorse[i][j] == id_risorsa )
@@ -119,67 +119,92 @@ int mutex_detect::my_lock(int id_risorsa) {
     data_mutex.lock();
     
     if(stato_risorse[id_risorsa][0]==-1){
-		stato_risorse[id_risorsa][0]=gettid();
 		
-		data_mutex.unlock();
+		
+	
 		//cout<<"risorsa libera"<<endl;
 		
+		//stato_risorse[id_risorsa][0]=get_id();
+		#ifdef debbug
+			cout<<get_id()<<" - Prendo  "<<id_risorsa<<endl;
+		#endif
+		write_lock(id_risorsa);
+		data_mutex.unlock();
 		
-		g_pages_mutex[id_risorsa].lock();
+		g_pages_mutex[id_risorsa].lock();//questa lock non dovrebbe mai blocarsi
 		
+		data_mutex.lock();
+		
+		stato_risorse[id_risorsa][0]=get_id();
+		clear_write_lock(id_risorsa);
+		//post_lock(id_risorsa);
+
     }
     else if(stato_risorse[id_risorsa][0]==gettid()){
-    	std::cout<<HGRN<<"["<<gettid()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<RST<<std::endl;
-    	data_mutex.unlock();
+    	std::cout<<HGRN<<"["<<get_id()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<RST<<std::endl;
+    	//data_mutex.unlock();
 			
     }
     else
     {
-    	cout<<gettid()<<" - Mi blochero su "<<id_risorsa<<endl;
-    	
+    	#ifdef debbug
+    		cout<<get_id()<<" - Mi blochero su "<<id_risorsa<<endl;
+    	#endif
 		ris= test_deadlock(id_risorsa);
 		if(ris == 0){
 			//stato_risorse[id_risorsa][0]=gettid();
 			write_lock(id_risorsa);
+			
 			data_mutex.unlock();
 			g_pages_mutex[id_risorsa].lock();
 			
 			data_mutex.lock();
+			
 			//tutte le mie risorse non sono in attesa di niente
+			stato_risorse[id_risorsa][0]=get_id();
 			clear_write_lock(id_risorsa);
-			stato_risorse[id_risorsa][0]=gettid();
-			data_mutex.unlock();
+			
+			
+			
 		}
 		else if(ris == -1){
-			data_mutex.unlock();
 			
 		}
 		else{
-			data_mutex.unlock();
+			 
 			//deadlock detect
 		}
+		//data_mutex.unlock();
     }
-    
+    data_mutex.unlock();
     return ris;
 }
 
 int mutex_detect::my_unlock(int id_risorsa) {
 	data_mutex.lock();
-	//cout<<gettid()<<" - libero risorsa "<<id_risorsa<<endl;
-	if(stato_risorse[id_risorsa][0]==gettid()){
+	#ifdef debbug
+		cout<<get_id()<<" - libero risorsa "<<id_risorsa;
+	#endif
+	if(stato_risorse[id_risorsa][0]==get_id()){
 		write_unlock(id_risorsa);
-		stato_risorse[id_risorsa][0]=-1;
+		//stato_risorse[id_risorsa][0]=-1;
 		
-		data_mutex.unlock();
 		
+		//data_mutex.unlock();
 		g_pages_mutex[id_risorsa].unlock();
 	}
 	else
 	{
-		cout<<gettid()<<" - Risorsa non posseduta - "<<id_risorsa<<endl;
-		data_mutex.unlock();
+		#ifdef debbug
+			cout<<" --  "<<get_id()<<" - Risorsa non posseduta - "<<id_risorsa;
+		#endif
+		//data_mutex.unlock();
 	}
-    
+	#ifdef debbug
+		cout<<"  ok"<<endl;
+	#endif
+	
+    data_mutex.unlock();
     
 	
     return -1;
@@ -187,7 +212,7 @@ int mutex_detect::my_unlock(int id_risorsa) {
 
 std::ostream& operator<<(std::ostream& os, const mutex_detect& dt)
 {
-    os<<"["<<gettid()<<"]\tDati mutex struct"<<std::endl<<std::endl;
+    os<<"["<<get_id()<<"]\tDati mutex struct"<<std::endl<<std::endl;
     os<<"\tRisorsa\t P   - R_lock"<<std::endl;
     for(int i=0;i<N_max;i++){
     
@@ -200,5 +225,16 @@ std::ostream& operator<<(std::ostream& os, const mutex_detect& dt)
     os<<std::endl;
 
     return os;
+}
+
+
+ int get_id(){
+	#ifdef linux
+		return gettid();
+	#else
+		return std::this_thread::get_id(); //win
+	#endif
+
+
 }
 
