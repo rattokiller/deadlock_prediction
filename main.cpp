@@ -18,7 +18,7 @@ void save_page(const int i)
 
     //cout<<"pid : "<<gettid()<<endl;;
     status[i]=-2;
-    th_id[i]=gettid();
+    th_id[i]=get_id();
     mutex_detect& m = mutex_detect::getInstance();
     //int j = (i+1)%N_max;
     int j = rand()%N_max;
@@ -39,8 +39,10 @@ void save_page(const int i)
 		status[i]=100*j+i;
         if(m.my_lock(j)>0){
             deadlook=true;
-            cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;
-            #ifdef debbug
+            #ifdef debug_info
+            	cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;
+            #endif
+            #ifdef debug
                cout<< m;
             #endif
             m.my_unlock(i);
@@ -54,8 +56,10 @@ void save_page(const int i)
         
         if(!deadlook && m.my_lock(k)>0){
             deadlook=true;
-            cout<<HRED<<"\tRisolvo deadlook - 2"<<RST<<endl;
-            #ifdef debbug
+            #ifdef debug_info
+            	cout<<HRED<<"\tRisolvo deadlook - 2"<<RST<<endl;
+            #endif
+            #ifdef debug
                cout<< m;
             #endif
             m.my_unlock(i);
@@ -80,7 +84,7 @@ void save_page(const int i)
 	m.my_unlock(i);
 	status[i]=-100;
 	
-	#ifdef debbug
+	#ifdef debug
    		cout<<HMAG<<"End Process "<<i<<RST<<endl;
    	#endif
  
@@ -88,6 +92,8 @@ void save_page(const int i)
 
 int main_generate()
 {
+	int ris = 0;
+	
     //int i=0;
    	thread t[N_max];
    	my_terminate=true;
@@ -102,7 +108,7 @@ int main_generate()
    	
    	
     mutex_detect& m = mutex_detect::getInstance();
-    this_thread::sleep_for(std::chrono::milliseconds(100));
+    this_thread::sleep_for(std::chrono::milliseconds(30));
     
 
     /*
@@ -110,25 +116,37 @@ int main_generate()
     t2.join();
     t3.join();
     */
-    cout<< m;
-    cout<<"  Status:\n\t -1: no start"<<endl;
-    cout<<"\t -2 to -5 :start th"<<endl;
-    cout<<"\t -100 :start th"<<endl;
-    cout<<"\t  0 to "<<N_max<<" lock to risors i"<<endl<<endl;
     
     my_terminate=false;
     bool test = true;
+    
+    #ifdef debug
+		cout<< m;
+		cout<<"  Status:\n\t -1: no start"<<endl;
+		cout<<"\t -2 to -5 :start th"<<endl;
+		cout<<"\t -100 :start th"<<endl;
+		cout<<"\t  0 to "<<N_max<<" lock to risors i"<<endl<<endl;
+	#endif
+    
     for(int i=0;i<N_max;i++){
-    	#ifdef debbug
+    	#ifdef debug
     		cout<<"["<<i<<"]\tth["<<th_id[i]<<"]\t"<<status[i]<<endl;
     	#endif
     	test = test && (status[i] == -100);
     }
     
-    if(test)	cout<<"Processo Terminato BENE"<<endl;
-    else 		cout<<HRED<<"\t =======\tProcesso Terminato MALE   <<<======="<<RST<<endl;
+    if(test){
+    	#ifdef debug_info
+    		cout<<"Processo Terminato BENE"<<endl;
+    	#endif
+    }
+    else 
+    {
+    	cout<<HRED<<"\t =======\tProcesso Terminato MALE   <<<======="<<RST<<endl;
+    	ris=1;
+    }
     for(int i=0;i<N_max;i++)
-    	t[i].join();
+    	t[i].join();   
     	
     
    	
@@ -138,22 +156,34 @@ int main_generate()
 
 
     // safe to access g_pages without lock now, as the threads are joined
-	return 0;
+	return ris;
 }
 
 int main(int argc,char **argv)
 {
 	int N=1;
+	struct timeval tv;
 	srand (time(NULL));
-	
+	int fail=0;
+	uint64_t t,start;
 	cout<<"Start [N_risorse "<<N_max<<"]"<<endl<<endl;
 	if(argc > 1)
 		N=atoi(argv[1]);
 		
 	for(int i=0;i<N;i++){
-	cout<<HCYN<<"Prova N[ "<<i+1<<" ]"<<RST<<endl;
 	
-			main_generate();
+			cout<<HCYN<<"Prova N[ "<<i+1<<" ]"<<RST;
+			gettimeofday(&tv, NULL);
+			start = tv.tv_sec * 1000000ULL + tv.tv_usec;//lo start va in microsecondi altrimenti sto perdendo informazioni
+
+			fail += main_generate();
+			gettimeofday(&tv, NULL);
+			t = tv.tv_sec * 1000000ULL + tv.tv_usec;
+			
+			cout<<"\t-\t"<<(t-start)/1000<<" ms"<<endl;
+	
 	}
+	
+	cout <<"Numero di processi falliti: " <<fail<<"/"<<N<<endl;
 
 }

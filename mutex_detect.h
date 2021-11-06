@@ -27,7 +27,7 @@
 
 #define linux
 //#define debug
-
+//#define debug_info
 
 #define Rand_max_time 8
 #define Rand_max_id 5
