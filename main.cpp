@@ -5,6 +5,7 @@
 #include <thread>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <sys/time.h>
 
 #include "mutex_detect.h"
 

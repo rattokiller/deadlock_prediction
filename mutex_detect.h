@@ -10,28 +10,9 @@
 #include <iostream>
 #include <thread>
 
-//High intensty text
-#define HBLK "\e[0;90m"
-#define HRED "\e[0;91m"
-#define HGRN "\e[0;92m"
-#define HYEL "\e[0;93m"
-#define HBLU "\e[0;94m"
-#define HMAG "\e[0;95m"
-#define HCYN "\e[0;96m"
-#define HWHT "\e[0;97m"  
-
-//Reset
-#define RST "\e[0m"
-
-#define N_max 30
-
-#define linux
-//#define debug
-//#define debug_info
-
-#define Rand_max_time 8
-#define Rand_max_id 5
- class mutex_detect {
+#include "utils.h"
+ 
+class mutex_detect {
 private:
   
     std::mutex g_pages_mutex[N_max];   
@@ -44,18 +25,18 @@ private:
     void clear_write_lock(int id_risorsa);
     void write_unlock(int id_risorsa);
     
-    
+    mutex_detect();
 
 public:
 	
-    mutex_detect();
+    
     static mutex_detect& getInstance()
-    {
-        static mutex_detect    instance; // Guaranteed to be destroyed.
-        // Instantiated on first use.
-        return instance;
-    }
-
+   	{
+		static mutex_detect    instance; // Guaranteed to be destroyed.
+		// Instantiated on first use.
+		return instance;
+	}
+    
     int my_lock(int id_risorsa);
     int my_unlock(int id_risorsa);
 
@@ -63,7 +44,6 @@ public:
 };
 
 
-int get_id();
 
 /*
  * Regole
@@ -75,4 +55,4 @@ int get_id();
  * (6) - dopo la unlook
  */
 
-#endif //DEADLOCK_PREDICTION_MUTEX_DETECT_H
+#endif DEADLOCK_PREDICTION_MUTEX_DETECT_H
