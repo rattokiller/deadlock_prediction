@@ -16,17 +16,14 @@ class dependency_struct
 {
 	private:
 	  
-		 
-		std::mutex data_mutex;
+		
 		
 		std::vector<int> stato_risorse[N_max];
 
 		dependency_struct(){
 			for(int i=0;i<N_max;i++)
 		    		stato_risorse[i].push_back(-1);
-		}
-		
-		
+		}		
 
 	public:
 		
@@ -38,6 +35,11 @@ class dependency_struct
 		     
 		    return instance;
 		}
+		
+		 
+		std::mutex data_mutex;
+		
+		int get_pid_risorsa(int id_risorsa);
 		
 		
 		int  test_deadlock(int id_risorsa);

@@ -13,13 +13,7 @@
 
 using namespace std;
 
-/*
-dependency_struct::dependency_struct(){
-	for(int i=0;i<N_max;i++)
-    		stato_risorse[i].push_back(-1);
-}
-
-*/		
+	
 int  dependency_struct::test_deadlock(int id_risorsa)
 {//strudura doc
           
@@ -52,9 +46,15 @@ int  dependency_struct::test_deadlock(int id_risorsa)
     return 0;
 }
 
+int dependency_struct::get_pid_risorsa(int id_risorsa)
+{
+	return stato_risorse[id_risorsa][0];
+}
+
 
 void dependency_struct::clear_write_lock(int id_risorsa)
 {//strudura doc
+	stato_risorse[id_risorsa][0]=get_id();
 	int id = get_id();
 	
 	for(int i=0;i<N_max;i++)
@@ -115,6 +115,7 @@ void dependency_struct::write_unlock(int id_risorsa)
 	//bug
 	stato_risorse[id_risorsa].clear();
 	stato_risorse[id_risorsa].push_back(-1);
+	
 	return;
     //stato_risorse[id_risorsa][0]=-1;
     int id = get_id();

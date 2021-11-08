@@ -29,7 +29,7 @@ void save_page(const int i)
     {
         deadlook=false;
         status[i]=i;
-        if(m.my_lock(i)!=0)
+        if(m.my_lock2(i)!=0)
             cout<<"Errore - falsa deadlook rilevata"<<endl;
 		status[i]=-3;
 		
@@ -38,7 +38,7 @@ void save_page(const int i)
         this_thread::sleep_for(std::chrono::microseconds(5+rand()%Rand_max_time));
 
 		status[i]=100*j+i;
-        if(m.my_lock(j)>0){
+        if(m.my_lock2(j)>0){
             deadlook=true;
             #ifdef debug_info
             	cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;
@@ -46,7 +46,7 @@ void save_page(const int i)
             #ifdef debug
                cout<< m;
             #endif
-            m.my_unlock(i);
+            m.my_unlock2(i);
             //this_thread::sleep_until(std::chrono::seconds(1));
             this_thread::sleep_for(std::chrono::milliseconds(1+rand()%Rand_max_time));
         }
@@ -55,7 +55,7 @@ void save_page(const int i)
 
         status[i]=10000*k+100*j+i;
         
-        if(!deadlook && m.my_lock(k)>0){
+        if(!deadlook && m.my_lock2(k)>0){
             deadlook=true;
             #ifdef debug_info
             	cout<<HRED<<"\tRisolvo deadlook - 2"<<RST<<endl;
@@ -63,8 +63,8 @@ void save_page(const int i)
             #ifdef debug
                cout<< m;
             #endif
-            m.my_unlock(i);
-            m.my_unlock(j);
+            m.my_unlock2(i);
+            m.my_unlock2(j);
             //this_thread::sleep_until(std::chrono::seconds(1));
             this_thread::sleep_for(std::chrono::milliseconds(1+rand()%Rand_max_time));
         }
@@ -78,11 +78,10 @@ void save_page(const int i)
 
 
 	  
-	m.my_unlock(k);
-
-	m.my_unlock(j);
-
-	m.my_unlock(i);
+	m.my_unlock2(k);
+	m.my_unlock2(j);
+	m.my_unlock2(i);
+	
 	status[i]=-100;
 	
 	#ifdef debug
@@ -109,14 +108,8 @@ int main_generate()
    	
    	
     mutex_detect& m = mutex_detect::getInstance();
-    this_thread::sleep_for(std::chrono::milliseconds(30));
+    this_thread::sleep_for(std::chrono::milliseconds(50));
     
-
-    /*
-    t1.join();
-    t2.join();
-    t3.join();
-    */
     
     my_terminate=false;
     bool test = true;

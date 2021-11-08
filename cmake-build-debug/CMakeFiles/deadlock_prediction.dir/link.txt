@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\deadlock_prediction.dir/objects.a
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\deadlock_prediction.dir/objects.a @CMakeFiles\deadlock_prediction.dir\objects1.rsp
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\deadlock_prediction.dir/objects.a -Wl,--no-whole-archive -o deadlock_prediction.exe -Wl,--out-implib,libdeadlock_prediction.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\deadlock_prediction.dir\linklibs.rsp

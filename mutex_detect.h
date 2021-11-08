@@ -11,10 +11,13 @@
 #include <thread>
 
 #include "utils.h"
- 
+#include "dependency_struct.h"
+
 class mutex_detect {
 private:
   
+  	dependency_struct& data =  dependency_struct::getInstance();
+  	
     std::mutex g_pages_mutex[N_max];   
     std::mutex data_mutex;
     std::vector<int> stato_risorse[N_max];
@@ -34,11 +37,15 @@ public:
    	{
 		static mutex_detect    instance; // Guaranteed to be destroyed.
 		// Instantiated on first use.
+		
 		return instance;
 	}
     
     int my_lock(int id_risorsa);
     int my_unlock(int id_risorsa);
+    
+    int my_lock2(int id_risorsa);
+    int my_unlock2(int id_risorsa);
 
     friend std::ostream& operator<<(std::ostream& os, const mutex_detect& dt);
 };
