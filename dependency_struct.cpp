@@ -1,12 +1,7 @@
-//
-// Created by filip on 19/10/2021.
-//
-
 
 #include <mutex>
 #include <vector>
 #include <iostream>
-
 
 #include "utils.h"
 #include "dependency_struct.h"
@@ -41,8 +36,7 @@ int  dependency_struct::test_deadlock(int id_risorsa)
                 //trovare la risorsa associata crea torppi problemi di gestione, il processo deve rilasciare tutto
             }         
         }
-       
-       
+             
     return 0;
 }
 
@@ -103,9 +97,7 @@ void dependency_struct::write_lock(int id_risorsa)
 			stato_risorse[i].push_back(id_risorsa);
 			for(int j=1;j<stato_risorse[id_risorsa].size(); j++)
     			stato_risorse[i].push_back(stato_risorse[id_risorsa][j]);
-		}
-        
-        
+		}  
 	}   
 }
 
@@ -123,8 +115,7 @@ void dependency_struct::write_unlock(int id_risorsa)
     	for(int j=1;j<stato_risorse[i].size();j++)
     		if (stato_risorse[i][j] == id_risorsa )
                 stato_risorse[i].erase(stato_risorse[i].begin()+j);
-   
-   
+    
 }
 
 

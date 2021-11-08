@@ -1,14 +1,12 @@
-#ifndef _THREAD_UTILS_H_
-#define _THREAD_UTILS_H_
 
 
 #include "utils.h"
 
-#define _GNU_SOURCE
+//#define _GNU_SOURCE
 #include <unistd.h>
 
 int get_id(){
-	#ifdef linux
+	#ifdef my_linux
 		return gettid();
 	#else
 		return std::this_thread::get_id(); //win
@@ -17,4 +15,4 @@ int get_id(){
 
 }
 
-#endif
+

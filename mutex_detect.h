@@ -20,15 +20,14 @@ private:
   	
     std::mutex g_pages_mutex[N_max];   
     std::mutex data_mutex;
-    std::vector<int> stato_risorse[N_max];
+    
+  //  std::vector<int> ciao[N_max];//stato_risorse
 
-    int  test_deadlock(int id_risorsa);
-    void write_lock(int id_risorsa);
     
-    void clear_write_lock(int id_risorsa);
-    void write_unlock(int id_risorsa);
-    
-    mutex_detect();
+    mutex_detect()
+    {
+    	dependency_struct& data =  dependency_struct::getInstance();
+    }
 
 public:
 	
@@ -41,11 +40,10 @@ public:
 		return instance;
 	}
     
+ 
+    
     int my_lock(int id_risorsa);
     int my_unlock(int id_risorsa);
-    
-    int my_lock2(int id_risorsa);
-    int my_unlock2(int id_risorsa);
 
     friend std::ostream& operator<<(std::ostream& os, const mutex_detect& dt);
 };
@@ -62,4 +60,4 @@ public:
  * (6) - dopo la unlook
  */
 
-#endif DEADLOCK_PREDICTION_MUTEX_DETECT_H
+#endif 

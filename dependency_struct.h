@@ -26,7 +26,6 @@ class dependency_struct
 		}		
 
 	public:
-		
 
 		static dependency_struct& getInstance()
 		{
@@ -64,4 +63,4 @@ class dependency_struct
  * (6) - dopo la unlook
  */
 
-#endif _DEPENDENCY_STRUCT_H_
+#endif 
