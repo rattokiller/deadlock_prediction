@@ -31,7 +31,8 @@ private:
 
 public:
 	
-    
+    pthread_t t[N_max]; //tohliere da qui
+    int th_id[N_max];
     static mutex_detect& getInstance()
    	{
 		static mutex_detect    instance; // Guaranteed to be destroyed.
@@ -39,11 +40,12 @@ public:
 		
 		return instance;
 	}
-    
+  
  
     
     int my_lock(int id_risorsa);
     int my_unlock(int id_risorsa);
+
 
     friend std::ostream& operator<<(std::ostream& os, const mutex_detect& dt);
 };

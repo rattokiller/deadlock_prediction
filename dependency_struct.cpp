@@ -57,11 +57,12 @@ void dependency_struct::clear_write_lock(int id_risorsa)
 			stato_risorse[i].clear();
 			stato_risorse[i].push_back(id);		
 		}
+		
 }
 
 void dependency_struct::write_lock(int id_risorsa)
 {//strudura doc
-    
+    static int max_size=0;
     int id = get_id();
    	bool continua ;
 
@@ -86,11 +87,15 @@ void dependency_struct::write_lock(int id_risorsa)
         for(int j=1;j<stato_risorse[i].size() && continua;j++){
 	        if (stato_risorse[stato_risorse[i][j]][0] == id)
 	            continua = false;
-	            if(stato_risorse[i].size()>3*N_max+1){
-	            cout<<"Errore Critico BUG "<<stato_risorse[i].size()<<endl;
+	            if(stato_risorse[i].size()>3*N_max+1)
+					if(max_size<stato_risorse[i].size()){
+						max_size=stato_risorse[i].size();
+						cout<<"CATTIVA OTTIMIZAZIONE  "<<max_size<<endl;
 	            //*(int*)(10)=2;//Segmentation fault
 	            
-	            }           	
+					}
+	            
+	                       	
 	    }   
 		         
 		if(continua == false){
@@ -110,14 +115,26 @@ void dependency_struct::write_unlock(int id_risorsa)
 	
 	return;
     //stato_risorse[id_risorsa][0]=-1;
-    int id = get_id();
-    for(int i=0;i<N_max;i++)
-    	for(int j=1;j<stato_risorse[i].size();j++)
-    		if (stato_risorse[i][j] == id_risorsa )
-                stato_risorse[i].erase(stato_risorse[i].begin()+j);
+    
     
 }
 
+int dependency_struct::max_size_threadX(){
+
+	int pid_th = -1;
+	int max_size = 0;
+
+	for(int i=0;i<N_max;i++)
+		if(max_size < stato_risorse[i].size() && stato_risorse[i][0] != -1){
+			max_size = stato_risorse[i].size();
+			pid_th = stato_risorse[i][0];
+		}
+		else if(stato_risorse[i].size() > 1 && stato_risorse[i][0] == -1)
+			cout<<"ERRORE STATO INCONSISTENTE!!" <<endl;
+
+	return pid_th;
+
+}
 
 std::ostream& operator<<(std::ostream& os, const dependency_struct& dt)
 {

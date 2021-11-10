@@ -37,8 +37,23 @@ int mutex_detect::my_lock(int id_risorsa) {
     	#ifdef debug_info
     		std::cout<<HGRN<<"["<<get_id()<<"]\tDeadlook Rilevata\t Risorsa["<<id_risorsa<<"] - Gia posseduta !"<<RST<<std::endl;
     	#endif
-    	//data_mutex.unlock();
+		
+		//cercare il task X  da "far muovere"
+		int th_pid = data.max_size_threadX();
+		int th_X=0;
+
+		
+		if(th_X != -1){
+			for(int i=0;i<N_max;i++)
+				if(th_id[i]==th_pid)
+					th_X = i;
 			
+			
+			//fare elevazione di priorita task X
+			pthread_setschedprio(t[th_X], sched_get_priority_max(sched_getscheduler(gettid())+1));
+		}
+		else
+			cout<< " BUG Critico th_X = -1"<<endl;		
     }
     else
     {

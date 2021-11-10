@@ -37,7 +37,11 @@ class dependency_struct
 		
 		 
 		std::mutex data_mutex;
-		
+
+
+    	int max_size_threadX(); //trova il thread  che sta blocando tutti
+		int max_threadX();
+
 		int get_pid_risorsa(int id_risorsa);
 		
 		
