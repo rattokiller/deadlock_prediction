@@ -2,6 +2,7 @@
 #include <mutex>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "utils.h"
 #include "dependency_struct.h"
@@ -60,9 +61,20 @@ void dependency_struct::clear_write_lock(int id_risorsa)
 		
 }
 
-void dependency_struct::write_lock(int id_risorsa)
+void dependency_struct::my_unique(int i) //teta di N
+{
+	std::vector<int>::iterator it;
+
+	sort(stato_risorse[i].begin()+1, stato_risorse[i].end());//usare un vettore gia ordinato  quando si fa la push per risparmiare
+	it = unique (stato_risorse[i].begin(), stato_risorse[i].end());   
+																		
+	stato_risorse[i].resize(distance(stato_risorse[i].begin(),it) );
+
+}
+void dependency_struct::write_lock(int id_risorsa) //teoricamente è teta N^2 ma mediamente e tra N e Nlog(N)
 {//strudura doc
-    static int max_size=0;
+	//in pratica basta una solo unique
+    
     int id = get_id();
    	bool continua ;
 
@@ -75,7 +87,12 @@ void dependency_struct::write_lock(int id_risorsa)
     		
     		for(int j=1;j<stato_risorse[id_risorsa].size(); j++)
     			stato_risorse[i].push_back(stato_risorse[id_risorsa][j]);
-    	}	
+    	}
+		
+		my_unique(i); //fare questo blocco rallenta il codice ma da un limite superiore al vettore 
+		//(ma ne fa risparmiare altro nell test + altre write quindi si)
+			
+			
     }
     
     for(int i=0;i<N_max;i++){//sta un problema grave
@@ -87,13 +104,8 @@ void dependency_struct::write_lock(int id_risorsa)
         for(int j=1;j<stato_risorse[i].size() && continua;j++){
 	        if (stato_risorse[stato_risorse[i][j]][0] == id)
 	            continua = false;
-	            if(stato_risorse[i].size()>3*N_max+1)
-					if(max_size<stato_risorse[i].size()){
-						max_size=stato_risorse[i].size();
-						cout<<"CATTIVA OTTIMIZAZIONE  "<<max_size<<endl;
-	            //*(int*)(10)=2;//Segmentation fault
-	            
-					}
+	        		if(stato_risorse[i].size()>N_max+1) cout<<"CATTIVA OTTIMIZAZIONE  "<<stato_risorse[i].size()<<endl;
+	          
 	            
 	                       	
 	    }   
@@ -103,7 +115,12 @@ void dependency_struct::write_lock(int id_risorsa)
 			for(int j=1;j<stato_risorse[id_risorsa].size(); j++)
     			stato_risorse[i].push_back(stato_risorse[id_risorsa][j]);
 		}  
-	}   
+
+	my_unique(i); //fare questo blocco rallenta il codice ma da un limite superiore al vettore 
+			
+	}
+	
+ 
 }
 
 
@@ -114,9 +131,7 @@ void dependency_struct::write_unlock(int id_risorsa)
 	stato_risorse[id_risorsa].push_back(-1);
 	
 	return;
-    //stato_risorse[id_risorsa][0]=-1;
-    
-    
+
 }
 
 int dependency_struct::max_size_threadX(){

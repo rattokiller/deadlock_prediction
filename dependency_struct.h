@@ -19,6 +19,7 @@ class dependency_struct
 		
 		
 		std::vector<int> stato_risorse[N_max];
+		void my_unique(int i);
 
 		dependency_struct(){
 			for(int i=0;i<N_max;i++)
