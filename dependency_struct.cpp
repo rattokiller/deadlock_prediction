@@ -149,7 +149,8 @@ int dependency_struct::max_size_threadX(){
 
 	return pid_th;
 
-}
+} 
+
 
 std::ostream& operator<<(std::ostream& os, const dependency_struct& dt)
 {
