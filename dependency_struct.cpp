@@ -123,13 +123,12 @@ void dependency_struct::write_lock(int id_risorsa) //teoricamente è teta N^2 ma
  
 }
 
-
 void dependency_struct::write_unlock(int id_risorsa)
-{//strudura doc
-	//bug
+{
+	
 	stato_risorse[id_risorsa].clear();
 	stato_risorse[id_risorsa].push_back(-1);
-	
+	 
 	return;
 
 }
