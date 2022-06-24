@@ -77,7 +77,7 @@ void mutex_detect::write_lock(int id_risorsa)
     	
     }
     
-    for(int i=0;i<N_max;i++){//sta un problema grave
+    for(int i=0;i<N_max;i++){//sta un problema grave di performance
     	continua = true;
     	
     	//la risorsa posseduta è blocata da quella richiesta piu tutte le risorse che blocano quella richiesta
@@ -138,7 +138,7 @@ int mutex_detect::my_lock(int id_risorsa) {
 		write_lock(id_risorsa);
 		data_mutex.unlock();
 		
-		g_pages_mutex[id_risorsa].lock();//questa lock non dovrebbe mai blocarsi
+		g_pages_mutex[id_risorsa].lock();//questa lock non si puo mai blocarsi
 		
 		data_mutex.lock();
 		

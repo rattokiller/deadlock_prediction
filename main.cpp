@@ -38,7 +38,7 @@ void save_page(const int i)
         this_thread::sleep_for(std::chrono::microseconds(5+rand()%Rand_max_time));
 
 		status[i]=100*j+i;
-        if(m.my_lock(j)>0){
+        if(m.mqry_lock(j)>0){
             deadlook=true;
             #ifdef debug_info
             	cout<<HRED<<"\tRisolvo deadlook - 1"<<RST<<endl;

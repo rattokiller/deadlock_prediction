@@ -55,4 +55,4 @@ public:
  * (6) - dopo la unlook
  */
 
-#endif DEADLOCK_PREDICTION_MUTEX_DETECT_H
+#endif //DEADLOCK_PREDICTION_MUTEX_DETECT_H

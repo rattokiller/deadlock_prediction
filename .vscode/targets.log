@@ -1,0 +1,406 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-pc-mingw32
+ 
+
+# Make data base, printed on Fri Jun 24 20:49:49 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+HOMEDRIVE = C:
+# automatic
+@F = $(notdir $@)
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# makefile
+CURDIR := c:/GitHub/deadlock_prediction
+# default
+SHELL := sh.exe
+# environment
+CLION = C:\Program Files\JetBrains\CLion 2021.2.1\bin;
+# environment
+WINDIR = C:\WINDOWS
+# environment
+VSCODE_NLS_CONFIG = {"locale":"it","availableLanguages":{"*":"it"},"_languagePackId":"e42d83a2243fefd704ae12d65a4126f2.it","_translationsConfigFile":"C:\\Users\\filip\\AppData\\Roaming\\Code\\clp\\e42d83a2243fefd704ae12d65a4126f2.it\\tcf.json","_cacheRoot":"C:\\Users\\filip\\AppData\\Roaming\\Code\\clp\\e42d83a2243fefd704ae12d65a4126f2.it","_resolvedLanguagePackCoreLocation":"C:\\Users\\filip\\AppData\\Roaming\\Code\\clp\\e4 
+2d83a2243fefd704ae12d65a4126f2.it\\30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"C:\\Users\\filip\\AppData\\Roaming\\Code\\clp\\e42d83a2243fefd704ae12d65a4126f2.it\\corrupted.info","_languagePackSupport":true}
+# environment
+ONEDRIVE = C:\Users\filip\OneDrive
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# makefile (from `makefile', line 1)
+MAKEFILE_LIST :=  makefile
+# environment
+TMP = C:\Users\filip\AppData\Local\Temp
+# environment
+VSCODE_VERBOSE_LOGGING = true 
+
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-c6266cee-6237-4c6d-8c38-24a92bd80732-sock
+# environment
+VSCODE_CWD = C:\Users\filip\AppData\Local\Programs\Microsoft VS Code
+# environment
+PATH = C:\Program Files (x86)\VMware\VMware Player\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;";C:\Users\filip\AppData\Local\GitHubDesktop\GitHubDesktop.exe";C:\Program Files\MATLAB\R2022a\runtime\win64;C:\Program Files\MATLAB\R2022a\bin;C:\Program Files\MATLAB\R2021b\runtime\win64;C:\Program Files\MATLAB\R2021b\bin;C:\Program Files\Git\cmd;C:\Users\filip\OneDrive\Desktop\MINGW64-mcode-standalone\bin\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Graphviz\bin;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\filip\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\filip\AppData\Local\Programs\Python\Python310\;C:\Users\filip\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\CLion 2021.2.1\bin;C:\Users\filip\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\filip\AppData\Local\GitHubDesktop\bin;C:\Users\filip\AppData\Local\Microsoft\WindowsApps;C:\Users\filip\OneDrive\Desktop\MINGW64-mcode-standalone\bin\;C:\Program Files\JetBrains\PyCharm 2021.3.3\bin;;C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Program Files (x86)\GnuWin32\bin;
+# environment
+ONLINESERVICES = Online Services
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# environment
+ZES_ENABLE_SYSMAN = 1
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+USERPROFILE = C:\Users\filip
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+VSCODE_LOG_STACK = false
+# environment
+NUMBER_OF_PROCESSORS = 8
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives
+# automatic
+%F = $(notdir $%)
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11404_JHYNBSFSAZCKQVXT
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+COMPUTERNAME = LAPTOP-JSB3MR4G
+# environment
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERNAME = filip
+# environment
+PUBLIC = C:\Users\Public
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extens 
+ionHostProcess
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\filip\AppData\Roaming\Code\CachedData\30d9c6cd9483b2cc586687151bcbcd635f373630
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# environment
+LOGONSERVER = \\LAPTOP-JSB3MR4G
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+USERDOMAIN = LAPTOP-JSB3MR4G
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# default
+MAKE_VERSION := 3.81
+# makefile
+.DEFAULT_GOAL := all
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+LOCALAPPDATA = C:\Users\filip\AppData\Local
+# environment
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+# default
+MAKE_COMMAND := make.exe
+# environment
+PROCESSOR_ARCHITEW6432 = AMD64
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
+# environment
+OS = Windows_NT
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\73cf567c4f10e55e89437cca49ca5dc9-1.68.1-main-sock
+# environment
+HOMEPATH = \Users\filip
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+PROMPT = $P$G
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+REGIONCODE = EMEA
+# environment
+SYSTEMROOT = C:\WINDOWS
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+PLATFORMCODE = KV
+# automatic
++F = $(notdir $+)
+# environment
+APPDATA = C:\Users\filip\AppData\Roaming
+# environment
+TEMP = C:\Users\filip\AppData\Local\Temp
+# environment
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+SYSTEMDRIVE = C:
+# environment
+SESSIONNAME = Console
+# environment
+PROCESSOR_REVISION = 8c01
+# environment
+PYCHARM = C:\Program Files\JetBrains\PyCharm 2021.3.3\bin;
+# environment
+M 
+AKELEVEL := 0
+# environment
+GHDL = .C:\Users\filip\OneDrive\Desktop\MINGW64-mcode-standalone\bin\ghdl.exe
+# environment
+LANG = C
+# environment
+PROCESSOR_LEVEL = 6
+# environment
+VSCODE_PID = 11404
+# environment
+USERDOMAIN_ROAMINGPROFILE = LAPTOP-JSB3MR4G
+# variable set hash-table stats:
+# Load=93/1024=9%, Rehash=0, Collisions=9/115=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# : could not be stat'd.
+# C:\Program Files\Docker\Docker\resources\bin (key C:/Program Files/Docker/Docker/resources/bin, mtime 1647353288): 13 files, no impossibilities.
+# C:\Program Files\MATLAB\R2021b\runtime\win64 (key C:/Program Files/MATLAB/R2021b/runtime/win64, mtime 1635872547): 9 files, no impossibilities.
+# C:\Program Files\MATLAB\R2022a\runtime\win64 (key C:/Program Files/MATLAB/R2022a/runtime/win64, mtime 1650220442): 9 files, no impossibilities.
+# " (key c:/GitHub/deadlock_prediction/", mtime 1655826648): could not be opened.
+# C:\WINDOWS\System32\WindowsPowerShell\v1.0\ (key C:/WINDOWS/System32/WindowsPowerShell/v1.0/, mtime 1635675882): 32 files, no impossibilities.
+# C:\WINDOWS\System32\Wbem (key C:/WINDOWS/System32/Wbem, mtime 1652364769): 155 files, no impossibilities.
+# . (key c:/GitHub/deadlock_prediction, mtime 1655826648): 30 files, no impossibilities.
+# C:\Users\filip\AppData\Local\Programs\Python\Python310\ (key C:/Users/filip/AppData/Local/Programs/Python/Python310/, mtime 1645719305): 29 files, no impossibilities.
+# C:\Users\filip\OneDrive\Desktop\MINGW64-mcode-standalone\bin\ (key C:/Users/filip/OneDrive/Desktop/MINGW64-mcode-standalone/bin/, mtime 1639998598): 7 files, no impossibilities.
+# C:\Users\filip\AppData\Local\Programs\Python\Python310\Scripts\ (key C:/Users/filip/AppData/Local/Programs/Python/Python310/Scripts/, mtime 1648653672): 46 files, no impossibilities.
+# C:\Users\filip\AppData\Local\Programs\Microsoft VS Code\bin (key C:/Users/filip/AppData/Local/Programs/Microsoft VS Code/bin, mtime 1655320692): 4 files, no impossibilities.
+# C:\WINDOWS\System32\OpenSSH\: could not be stat'd.
+# C:\Program Files\JetBrains\CLion 2021.2.1\bin (key C:/Program Files/JetBrains/CLion 2021.2.1/bin, mtime 1630578420): 34 files, no impossibilities.
+# C:\WINDOWS (key C:/WINDOWS, mtime 1655223842): 124 files, no impossibilities.
+# C:\Users\filip\AppData\Local\GitHubDesktop\bin (key C:/Users/filip/AppData/Local/GitHubDesktop/bin, mtime 1631987623): 4 files, no impossibilities.
+# C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin (key C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin, mtime 1630581352): 58 files, no impossibilities.
+# C:\Program Files\MATLAB\R2021b\bin (key C:/Program Files/MATLAB/R2021b/bin, mtime 1635872586): 21 files, no impossibilities.
+# C:\Users\filip\AppData\Local\GitHubDesktop\GitHubDesktop.exe" (key C:/Users/filip/AppData/Local/GitHubDesktop/GitHubDesktop.exe", mtime 1655218181): could not be opened.
+# C:\Program Files\MATLAB\R2022a\bin (key C:/Program Files/MATLAB/R2022a/bin, mtime 1650220616): 21 files, no impossibilities.
+# C:\ProgramData\DockerDesktop\version-bin: could not be stat'd.
+# C:\Users\filip\AppData\Local\Microsoft\WindowsApps (key C:/Users/filip/AppData/Local/Microsoft/WindowsApps, mtime 1655889724): 24 files, no impossibilities.
+# C:\Program Files\Git\cmd (key C:/Program Files/Git/cmd, mtime 1638563772): 8 files, no impossibilities.
+# C:\WINDOWS\system32 (key C:/WINDOWS/system32, mtime 1655473165): 2926 files, no impossibilities.
+# C:\Program Files (x86)\VMware\VMware Player\bin\ (key C:/Program Files (x86)/VMware/VMware Player/bin/, mtime 1630832512): 4 files, no impossibilities.
+# C:\Program Files\JetBrains\PyCharm 2021.3.3\bin: could not be stat'd.
+# C:\Program Files\Graphviz\bin (key C:/Program Files/Graphviz/bin, mtime 1648654398): 61 files, no impossibilities.
+# C:\Program Files (x86)\GnuWin32\bin (key C:/Program Files (x86)/GnuWin32/bin, mtime 1655826209): 5 files, no impossibilities.
+
+# 3624 files, no impossibilities in 28 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+dependency_struct.o: dependency_struct.cpp dependency_struct.h utils.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 16):
+	g++ -c dependency_struct.cpp
+	
+
+all: main.o mutex.o utils.o dependency_struct.o
+#  Command-line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/2=0%
+#  commands to execute (from `makefile', line 4):
+	g++ -o deadlock_prediction main.o mutex_detect.o utils.o dependency_struct.o
+	./deadlock_prediction $(N)
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+mutex.o: mutex_detect.cpp mutex_detect.h utils.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 12):
+	g++ -c mutex_detect.cpp
+	
+
+# Not a target:
+utils.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-21 17:47:15
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-01-24 14:51:01
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+utils.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+main.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-21 17:55:56
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+dependency_struct.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-01-24 14:51:01
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+dependency_struct.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+utils.o: utils.h utils.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 20):
+	g++ -c utils.cpp
+	
+
+main.o: main.cpp mutex_detect.h utils.h dependency_struct.h
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  Last modified 2022-06-21 17:47:19
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := main.o
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := main.cpp mutex_detect.h utils.h dependency_struct.h
+# automatic
+# | := 
+# automatic
+# < := main.cpp
+# automatic
+# ^ := main.cpp mutex_detect.h utils.h dependency_struct.h
+# automatic
+# ? := main.cpp
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/10=10%
+#  commands to execute (from `makefile', line 9):
+	g++ -c main.cpp
+	
+
+# Not a target:
+mutex_detect.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-21 17:46:36
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+mutex_detect.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=15/1024=1%, Rehash=0, Collisions=0/44=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Fri Jun 24 20:49:49 2022
+
+ 

@@ -18,7 +18,7 @@
 
 #define N_max 30
 
-#define linux
+//#define linux
 //#define debug
 //#define debug_info
 
@@ -28,4 +28,4 @@
 
 int get_id();
 
-#endif _UTILS_H_
+#endif //_UTILS_H_

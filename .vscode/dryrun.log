@@ -1,0 +1,11 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make.exe: Entering directory `c:/GitHub/deadlock_prediction'
+g++ -c main.cpp
+g++ -c mutex_detect.cpp
+g++ -c utils.cpp
+g++ -c dependency_struct.cpp
+g++ -o deadlock_prediction main.o mutex_detect.o utils.o dependency_struct.o
+./deadlock_prediction 
+ 
+make.exe: Leaving directory `c:/GitHub/deadlock_prediction'
+ 
